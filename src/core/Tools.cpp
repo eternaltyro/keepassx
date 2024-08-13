@@ -26,7 +26,7 @@
 #include <QElapsedTimer>
 
 #ifdef Q_OS_WIN
-#include <windows.h> // for Sleep()
+#include <windows.h> // for Sleep(), SetDllDirectoryA() and SetSearchPathMode()
 #endif
 
 #ifdef Q_OS_UNIX
@@ -71,7 +71,9 @@ bool hasChild(const QObject* parent, const QObject* child)
     if (!parent || !child) {
         return false;
     }
-    Q_FOREACH (QObject* c, parent->children()) {
+
+    const QObjectList children = parent->children();
+    for (QObject* c : children) {
         if (child == c || hasChild(c, child)) {
             return true;
         }
@@ -120,10 +122,10 @@ bool readAllFromDevice(QIODevice* device, QByteArray& data)
 
 QString imageReaderFilter()
 {
-    QList<QByteArray> formats = QImageReader::supportedImageFormats();
+    const QList<QByteArray> formats = QImageReader::supportedImageFormats();
     QStringList formatsStringList;
 
-    Q_FOREACH (const QByteArray& format, formats) {
+    for (const QByteArray& format : formats) {
         for (int i = 0; i < format.size(); i++) {
             if (!QChar(format.at(i)).isLetterOrNumber()) {
                 continue;
@@ -138,13 +140,23 @@ QString imageReaderFilter()
 
 bool isHex(const QByteArray& ba)
 {
-    Q_FOREACH (char c, ba) {
+    for (char c : ba) {
         if ( !( (c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F') ) ) {
             return false;
         }
     }
 
     return true;
+}
+
+bool isBase64(const QByteArray& ba)
+{
+    QRegExp regexp("^(?:[a-z0-9+/]{4})*(?:[a-z0-9+/]{3}=|[a-z0-9+/]{2}==)?$",
+                   Qt::CaseInsensitive, QRegExp::RegExp2);
+
+    QString base64 = QString::fromLatin1(ba.constData(), ba.size());
+
+    return regexp.exactMatch(base64);
 }
 
 void sleep(int ms)
@@ -217,6 +229,15 @@ void disableCoreDumps()
     if (!success) {
         qWarning("Unable to disable core dumps.");
     }
+}
+
+void setupSearchPaths()
+{
+#ifdef Q_OS_WIN
+    // Make sure Windows doesn't load DLLs from the current working directory
+    SetDllDirectoryA("");
+    SetSearchPathMode(BASE_SEARCH_PATH_ENABLE_SAFE_SEARCHMODE);
+#endif
 }
 
 } // namespace Tools

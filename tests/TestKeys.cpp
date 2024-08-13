@@ -21,7 +21,6 @@
 #include <QTest>
 
 #include "config-keepassx-tests.h"
-#include "tests.h"
 #include "core/Database.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
@@ -113,6 +112,7 @@ void TestKeys::testFileKey_data()
 {
     QTest::addColumn<QString>("type");
     QTest::newRow("Xml") << QString("Xml");
+    QTest::newRow("XmlBrokenBase64") << QString("XmlBrokenBase64");
     QTest::newRow("Binary") << QString("Binary");
     QTest::newRow("Hex") << QString("Hex");
     QTest::newRow("Hashed") << QString("Hashed");

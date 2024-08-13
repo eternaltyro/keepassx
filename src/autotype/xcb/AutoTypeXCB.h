@@ -42,16 +42,17 @@ class AutoTypePlatformX11 : public QObject, public AutoTypePlatformInterface
 
 public:
     AutoTypePlatformX11();
+    bool isAvailable() override;
     void unload() override;
-    QStringList windowTitles();
-    WId activeWindow();
-    QString activeWindowTitle();
-    bool registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers);
-    void unregisterGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers);
-    int platformEventFilter(void* event);
-    int initialTimeout();
-    bool raiseWindow(WId window);
-    AutoTypeExecutor* createExecutor();
+    QStringList windowTitles() override;
+    WId activeWindow() override;
+    QString activeWindowTitle() override;
+    bool registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers) override;
+    void unregisterGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers) override;
+    int platformEventFilter(void* event) override;
+    int initialTimeout() override;
+    bool raiseWindow(WId window) override;
+    AutoTypeExecutor* createExecutor() override;
 
     KeySym charToKeySym(const QChar& ch);
     KeySym keyToKeySym(Qt::Key key);
@@ -72,6 +73,7 @@ private:
     void stopCatchXErrors();
     static int x11ErrorHandler(Display* display, XErrorEvent* error);
 
+    XkbDescPtr getKeyboard();
     void updateKeymap();
     bool isRemapKeycodeValid();
     int AddKeysym(KeySym keysym);
@@ -122,8 +124,8 @@ class AutoTypeExecturorX11 : public AutoTypeExecutor
 public:
     explicit AutoTypeExecturorX11(AutoTypePlatformX11* platform);
 
-    void execChar(AutoTypeChar* action);
-    void execKey(AutoTypeKey* action);
+    void execChar(AutoTypeChar* action) override;
+    void execKey(AutoTypeKey* action) override;
 
 private:
     AutoTypePlatformX11* const m_platform;

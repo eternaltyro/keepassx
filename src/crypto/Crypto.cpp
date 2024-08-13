@@ -27,6 +27,7 @@
 
 bool Crypto::m_initalized(false);
 QString Crypto::m_errorStr;
+QString Crypto::m_backendVersion;
 
 Crypto::Crypto()
 {
@@ -39,7 +40,7 @@ bool Crypto::init()
         return true;
     }
 
-    gcry_check_version(0);
+    m_backendVersion = QString::fromLocal8Bit(gcry_check_version(0));
     gcry_control(GCRYCTL_INITIALIZATION_FINISHED, 0);
 
     if (!checkAlgorithms()) {
@@ -67,6 +68,11 @@ QString Crypto::errorString()
     return m_errorStr;
 }
 
+QString Crypto::backendVersion()
+{
+    return QString("libgcrypt ").append(m_backendVersion);
+}
+
 bool Crypto::backendSelfTest()
 {
     return (gcry_control(GCRYCTL_SELFTEST) == 0);
@@ -84,13 +90,11 @@ bool Crypto::checkAlgorithms()
         qWarning("Crypto::checkAlgorithms: %s", qPrintable(m_errorStr));
         return false;
     }
-#ifdef GCRYPT_HAS_SALSA20
     if (gcry_cipher_algo_info(GCRY_CIPHER_SALSA20, GCRYCTL_TEST_ALGO, nullptr, nullptr) != 0) {
         m_errorStr = "GCRY_CIPHER_SALSA20 not found.";
         qWarning("Crypto::checkAlgorithms: %s", qPrintable(m_errorStr));
         return false;
     }
-#endif
     if (gcry_md_test_algo(GCRY_MD_SHA256) != 0) {
         m_errorStr = "GCRY_MD_SHA256 not found.";
         qWarning("Crypto::checkAlgorithms: %s", qPrintable(m_errorStr));

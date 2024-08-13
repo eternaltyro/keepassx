@@ -30,7 +30,6 @@
 #include <QToolButton>
 
 #include "config-keepassx-tests.h"
-#include "tests.h"
 #include "core/Config.h"
 #include "core/Database.h"
 #include "core/Entry.h"
@@ -186,7 +185,7 @@ void TestGui::testSearch()
     QLineEdit* searchEdit = m_dbWidget->findChild<QLineEdit*>("searchEdit");
     QToolButton* clearSearch = m_dbWidget->findChild<QToolButton*>("clearButton");
 
-    QVERIFY(!searchEdit->hasFocus());
+    QVERIFY(!searchEdit->isVisible());
 
     // Enter search
     QTest::mouseClick(searchActionWidget, Qt::LeftButton);
@@ -212,6 +211,10 @@ void TestGui::testSearch()
     // Search for "some"
     QTest::keyClicks(searchEdit, "some");
     QTRY_COMPARE(entryView->model()->rowCount(), 4);
+    // Press Down to focus on the entry view
+    QVERIFY(!entryView->hasFocus());
+    QTest::keyClick(searchEdit, Qt::Key_Down);
+    QVERIFY(entryView->hasFocus());
 
     clickIndex(entryView->model()->index(0, 1), entryView, Qt::LeftButton);
     QAction* entryEditAction = m_mainWindow->findChild<QAction*>("actionEntryEdit");
@@ -237,6 +240,7 @@ void TestGui::testSearch()
     QVERIFY(entryDeleteWidget->isEnabled());
     QVERIFY(!m_db->metadata()->recycleBin());
 
+    MessageBox::setNextAnswer(QMessageBox::Yes);
     QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
 
     QCOMPARE(entryView->model()->rowCount(), 3);

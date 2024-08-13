@@ -22,7 +22,6 @@
 #include <QImage>
 #include <QMap>
 #include <QPixmap>
-#include <QPixmapCache>
 #include <QPointer>
 #include <QSet>
 #include <QUrl>
@@ -60,6 +59,7 @@ public:
     Uuid uuid() const;
     QImage icon() const;
     QPixmap iconPixmap() const;
+    QPixmap iconScaledPixmap() const;
     int iconNumber() const;
     Uuid iconUuid() const;
     QColor foregroundColor() const;
@@ -133,7 +133,7 @@ public:
      * if the entry has been changed.
      */
     void beginUpdate();
-    void endUpdate();
+    bool endUpdate();
 
     Group* group();
     const Group* group() const;
@@ -168,7 +168,6 @@ private:
     Entry* m_tmpHistoryItem;
     bool m_modifiedSinceBegin;
     QPointer<Group> m_group;
-    mutable QPixmapCache::Key m_pixmapCacheKey;
     bool m_updateTimeinfo;
 };
 

@@ -9,6 +9,14 @@
         <source>KeePassX is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
         <translation>Keepassx distribueras enligt villkoren i GNU General Public License (GPL) version 2 eller (om du vill) version 3.</translation>
     </message>
+    <message>
+        <source>Revision</source>
+        <translation>Revision</translation>
+    </message>
+    <message>
+        <source>Using:</source>
+        <translation>Använder:</translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -111,12 +119,13 @@
     </message>
     <message>
         <source>Failed to set key file</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte sätta nyckel-fil</translation>
     </message>
     <message>
         <source>Failed to set %1 as the Key file:
 %2</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte sätta %1 som nyckel-fil:
+%2</translation>
     </message>
 </context>
 <context>
@@ -160,6 +169,43 @@
     <message>
         <source>Select key file</source>
         <translation>Välj nyckel-fil</translation>
+    </message>
+</context>
+<context>
+    <name>DatabaseRepairWidget</name>
+    <message>
+        <source>Repair database</source>
+        <translation>Laga databasen</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Fel</translation>
+    </message>
+    <message>
+        <source>Can&apos;t open key file</source>
+        <translation>Kan inte öppna nyckelfilen</translation>
+    </message>
+    <message>
+        <source>Database opened fine. Nothing to do.</source>
+        <translation>Databas öppnades fint. Inget att göra.</translation>
+    </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation>Misslyckades att öppna databasen.</translation>
+    </message>
+    <message>
+        <source>Success</source>
+        <translation>Succé</translation>
+    </message>
+    <message>
+        <source>The database has been successfully repaired
+You can now save it.</source>
+        <translation>Databasens reparation har varit lyckad.
+Du kan nu spara den.</translation>
+    </message>
+    <message>
+        <source>Unable to repair the database.</source>
+        <translation>Misslyckades med att laga databasen.</translation>
     </message>
 </context>
 <context>
@@ -276,44 +322,56 @@ Spara ändringarna?</translation>
     <message>
         <source>The database you are trying to open is locked by another instance of KeePassX.
 Do you want to open it anyway? Alternatively the database is opened read-only.</source>
-        <translation type="unfinished"/>
+        <translation>Databasen som du försöker öppna är låst av en annan instans av KeePassX.
+Vill du öppna den ändå? Databasen kommer då att öppnas skrivskyddad.</translation>
     </message>
     <message>
         <source>Lock database</source>
-        <translation type="unfinished"/>
+        <translation>Lås databasen</translation>
     </message>
     <message>
         <source>Can't lock the database as you are currently editing it.
 Please press cancel to finish your changes or discard them.</source>
-        <translation type="unfinished"/>
+        <translation>Kan inte låsa databasen eftersom du håller på att redigera den.
+Tryck avbryt för att ansluta dina ändringar alternativt kasta dem.</translation>
     </message>
     <message>
         <source>This database has never been saved.
 You can save the database or stop locking it.</source>
-        <translation type="unfinished"/>
+        <translation>Databasen has aldrig sparats.
+Spara databasen eller sluta lås den.</translation>
     </message>
     <message>
         <source>This database has been modified.
 Do you want to save the database before locking it?
 Otherwise your changes are lost.</source>
-        <translation type="unfinished"/>
+        <translation>Databasen har ändrats.
+Vill du spara databasen innen du låser den?
+I annat fall försvinner ändringarna.</translation>
     </message>
     <message>
         <source>&quot;%1&quot; is in edit mode.
 Discard changes and close anyway?</source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; är i redigeringsläge.
+Kasta ändringarna och stäng endå?</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
-        <translation type="unfinished"/>
+        <translation>Exportera databasen till en CSV-fil</translation>
     </message>
     <message>
         <source>CSV file</source>
-        <translation type="unfinished"/>
+        <translation>CSV-fil</translation>
     </message>
     <message>
         <source>Writing the CSV file failed.</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte skriva till CSV-filen</translation>
+    </message>
+    <message>
+        <source>The database you are trying to save as is locked by another instance of KeePassX.
+Do you want to save it anyway?</source>
+        <translation>Databasen du försöker spara som är låst av en annan instans av KeePassX.
+Vill du spara endå?</translation>
     </message>
 </context>
 <context>
@@ -360,11 +418,11 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Fel</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte räkna nu master-nyckeln</translation>
     </message>
 </context>
 <context>
@@ -480,7 +538,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished"/>
+        <translation>Öppna</translation>
     </message>
 </context>
 <context>
@@ -635,11 +693,11 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Use default auto-type sequence of parent group</source>
-        <translation type="unfinished"/>
+        <translation>Använd standard auto-skriv sekvensen från föräldergruppen</translation>
     </message>
     <message>
         <source>Set default auto-type sequence</source>
-        <translation type="unfinished"/>
+        <translation>Ange standard auto-skriv sekvens</translation>
     </message>
 </context>
 <context>
@@ -791,7 +849,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte räkna nu master-nyckeln</translation>
     </message>
 </context>
 <context>
@@ -810,7 +868,17 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte räkna nu master-nyckeln</translation>
+    </message>
+    <message>
+        <source>The selected file is an old KeePass 1 database (.kdb).
+
+You can import it by clicking on Database &gt; 'Import KeePass 1 database'.
+This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
+        <translation>Den valda filen är en gammal KeePass 1 databas (.kdb)
+
+Du kan importera den genom att klicka på Databas &gt; Importera KeePass 1 databas.
+Detta är en envägsmigration. Du kan inte spara en databas som KeePass1 databas. Det som används i KeePassX 0.4.</translation>
     </message>
 </context>
 <context>
@@ -832,7 +900,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Recent databases</source>
-        <translation>Senast använda databser</translation>
+        <translation>Senast använda databaser</translation>
     </message>
     <message>
         <source>Help</source>
@@ -976,19 +1044,43 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Tools</source>
-        <translation type="unfinished"/>
+        <translation>Verktyg</translation>
     </message>
     <message>
         <source>Copy username</source>
-        <translation type="unfinished"/>
+        <translation>Kopiera användarnamn</translation>
     </message>
     <message>
         <source>Copy password</source>
-        <translation type="unfinished"/>
+        <translation>Kopiera lösenord</translation>
     </message>
     <message>
         <source>Export to CSV file</source>
-        <translation type="unfinished"/>
+        <translation>Exportera till CSV-fil</translation>
+    </message>
+    <message>
+        <source>Repair database</source>
+        <translation>Laga databasen</translation>
+    </message>
+    <message>
+        <source>KeePass 2 Database</source>
+        <translation>KeePass 2 databas</translation>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>Alla filer</translation>
+    </message>
+    <message>
+        <source>Save repaired database</source>
+        <translation>Spara lagad databas</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Fel</translation>
+    </message>
+    <message>
+        <source>Writing the database failed.</source>
+        <translation>Misslyckades med att skriva till databasen.</translation>
     </message>
 </context>
 <context>
@@ -1168,11 +1260,11 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Open previous databases on startup</source>
-        <translation>Öppna senaste databasen är programmet startar</translation>
+        <translation>Öppna senaste databasen när programmet startar</translation>
     </message>
     <message>
         <source>Automatically save on exit</source>
-        <translation>Spara automatiskt är applikationen anslutas</translation>
+        <translation>Spara automatiskt när applikationen anslutas</translation>
     </message>
     <message>
         <source>Automatically save after every change</source>
@@ -1208,7 +1300,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Remember last key files</source>
-        <translation type="unfinished"/>
+        <translation>Komihåg senaste nyckel-filen</translation>
     </message>
 </context>
 <context>
@@ -1261,10 +1353,6 @@ Discard changes and close anyway?</source>
     <message>
         <source>path to a custom config file</source>
         <translation>Sökväg till egen konfigurations-fil</translation>
-    </message>
-    <message>
-        <source>password of the database (DANGEROUS!)</source>
-        <translation>lösenord för databasen (FARLIGT!)</translation>
     </message>
     <message>
         <source>key file of the database</source>

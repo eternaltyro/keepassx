@@ -136,7 +136,7 @@ QVariant GroupModel::data(const QModelIndex& index, int role) const
             return databaseIcons()->iconPixmap(DatabaseIcons::ExpiredIconIndex);
         }
         else {
-            return group->iconPixmap();
+            return group->iconScaledPixmap();
         }
     }
     else if (role == Qt::FontRole) {
@@ -338,7 +338,7 @@ QMimeData* GroupModel::mimeData(const QModelIndexList& indexes) const
 
     QSet<Group*> seenGroups;
 
-    Q_FOREACH (const QModelIndex& index, indexes) {
+    for (const QModelIndex& index : indexes) {
         if (!index.isValid()) {
             continue;
         }
@@ -357,7 +357,7 @@ QMimeData* GroupModel::mimeData(const QModelIndexList& indexes) const
         return nullptr;
     }
     else {
-        data->setData(mimeTypes().first(), encoded);
+        data->setData(mimeTypes().at(0), encoded);
         return data;
     }
 }

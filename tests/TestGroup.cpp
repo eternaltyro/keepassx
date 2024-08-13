@@ -21,7 +21,6 @@
 #include <QSignalSpy>
 #include <QTest>
 
-#include "tests.h"
 #include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
@@ -386,7 +385,12 @@ void TestGroup::testClone()
     QVERIFY(clonedSubGroupEntry->uuid() != subGroupEntry->uuid());
     QCOMPARE(clonedSubGroupEntry->title(), QString("SubGroupEntry"));
 
+    Group* clonedGroupKeepUuid = originalGroup->clone(Entry::CloneNoFlags);
+    QCOMPARE(clonedGroupKeepUuid->entries().at(0)->uuid(), originalGroupEntry->uuid());
+    QCOMPARE(clonedGroupKeepUuid->children().at(0)->entries().at(0)->uuid(), subGroupEntry->uuid());
+
     delete clonedGroup;
+    delete clonedGroupKeepUuid;
     delete db;
 }
 

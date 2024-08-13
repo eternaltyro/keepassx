@@ -47,7 +47,7 @@ private Q_SLOTS:
     void modelReset();
 
 protected:
-    void dragMoveEvent(QDragMoveEvent* event);
+    void dragMoveEvent(QDragMoveEvent* event) override;
 
 private:
     void recInitExpanded(Group* group);

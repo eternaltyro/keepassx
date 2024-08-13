@@ -31,10 +31,10 @@ include(CheckCXXSourceCompiles)
 
 option(WITH_TESTS "Enable building of unit tests" ON)
 option(WITH_GUI_TESTS "Enable building of GUI tests" OFF)
-option(WITH_LTO "Enable Link Time Optimization (LTO)" OFF)
+option(WITH_DEV_BUILD "Use only for development. Disables/warns about deprecated methods." OFF)
 
-set(KEEPASSX_VERSION "2.0 beta 2")
-set(KEEPASSX_VERSION_NUM "1.9.92")
+set(KEEPASSX_VERSION "2.0.3")
+set(KEEPASSX_VERSION_NUM "2.0.3")
 
 if("${CMAKE_C_COMPILER}" MATCHES "clang$" OR "${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
   set(CMAKE_COMPILER_IS_CLANG 1)
@@ -100,20 +100,6 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
   set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,-z,relro")
 endif()
 
-if(WITH_LTO)
-  if(CMAKE_COMPILER_IS_GNUCC AND CMAKE_COMPILER_IS_GNUCXX)
-    check_cxx_compiler_flag("-flto -fuse-linker-plugin" LTO_AVAILABLE)
-
-    if(LTO_AVAILABLE)
-      add_gcc_compiler_flags("-flto -fuse-linker-plugin")
-    else()
-      message(FATAL_ERROR "This version of gcc doesn't support LTO")
-    endif(LTO_AVAILABLE)
-  else()
-    message(FATAL_ERROR "LTO is only supported with gcc")
-  endif()
-endif()
-
 add_gcc_compiler_cxxflags("-std=c++11")
 
 if(APPLE)
@@ -121,6 +107,10 @@ if(APPLE)
 endif()
 
 add_gcc_compiler_cflags("-ansi")
+
+if(WITH_DEV_BUILD)
+  add_definitions(-DQT_DEPRECATED_WARNINGS -DGCRYPT_NO_DEPRECATED)
+endif()
 
 if(MINGW)
   set(CMAKE_RC_COMPILER_INIT windres)
@@ -167,7 +157,7 @@ set(CMAKE_AUTOMOC ON)
 
 # Debian sets the the build type to None for package builds.
 # Make sure we don't enable asserts there.
-set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS_NONE QT_NO_DEBUG)
+set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS $<$<CONFIG:None>:QT_NO_DEBUG>)
 
 find_package(Gcrypt 1.6.0 REQUIRED)
 

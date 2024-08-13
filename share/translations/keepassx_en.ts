@@ -15,6 +15,10 @@
         <source>Revision</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Using:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -165,6 +169,42 @@
     </message>
     <message>
         <source>Select key file</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DatabaseRepairWidget</name>
+    <message>
+        <source>Repair database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t open key file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Database opened fine. Nothing to do.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Success</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The database has been successfully repaired
+You can now save it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to repair the database.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -325,6 +365,10 @@ Discard changes and close anyway?</source>
 Do you want to save it anyway?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
@@ -377,6 +421,14 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Unable to calculate master key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move entry to recycle bin?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -701,6 +753,14 @@ Do you want to save it anyway?</source>
             <numerusform></numerusform>
         </translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t read icon:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
@@ -814,6 +874,10 @@ Do you want to save it anyway?</source>
         <source>Unable to calculate master key</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Wrong key or database file is corrupt.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>KeePass2Reader</name>
@@ -831,6 +895,13 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Unable to calculate master key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The selected file is an old KeePass 1 database (.kdb).
+
+You can import it by clicking on Database &gt; &apos;Import KeePass 1 database&apos;.
+This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1009,6 +1080,30 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Export to CSV file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Repair database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePass 2 Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save repaired database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Writing the database failed.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

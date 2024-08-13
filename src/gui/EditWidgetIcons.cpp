@@ -19,6 +19,7 @@
 #include "ui_EditWidgetIcons.h"
 
 #include <QFileDialog>
+#include <QImageReader>
 
 #include "core/Group.h"
 #include "core/Metadata.h"
@@ -60,11 +61,8 @@ EditWidgetIcons::~EditWidgetIcons()
 {
 }
 
-IconStruct EditWidgetIcons::save()
+IconStruct EditWidgetIcons::state() const
 {
-    Q_ASSERT(m_database);
-    Q_ASSERT(!m_currentUuid.isNull());
-
     IconStruct iconStruct;
     if (m_ui->defaultIconsRadio->isChecked()) {
         QModelIndex index = m_ui->defaultIconsView->currentIndex();
@@ -85,9 +83,13 @@ IconStruct EditWidgetIcons::save()
         }
     }
 
+    return iconStruct;
+}
+
+void EditWidgetIcons::reset()
+{
     m_database = nullptr;
     m_currentUuid = Uuid();
-    return iconStruct;
 }
 
 void EditWidgetIcons::load(Uuid currentUuid, Database* database, IconStruct iconStruct)
@@ -98,7 +100,7 @@ void EditWidgetIcons::load(Uuid currentUuid, Database* database, IconStruct icon
     m_database = database;
     m_currentUuid = currentUuid;
 
-    m_customIconModel->setIcons(database->metadata()->customIcons(),
+    m_customIconModel->setIcons(database->metadata()->customIconsScaledPixmaps(),
                                 database->metadata()->customIconsOrder());
 
     Uuid iconUuid = iconStruct.uuid;
@@ -129,17 +131,21 @@ void EditWidgetIcons::addCustomIcon()
         QString filename = QFileDialog::getOpenFileName(
                     this, tr("Select Image"), "", filter);
         if (!filename.isEmpty()) {
-            QImage image(filename);
+            QImageReader imageReader(filename);
+            // detect from content, otherwise reading fails if file extension is wrong
+            imageReader.setDecideFormatFromContent(true);
+            QImage image = imageReader.read();
             if (!image.isNull()) {
                 Uuid uuid = Uuid::random();
                 m_database->metadata()->addCustomIconScaled(uuid, image);
-                m_customIconModel->setIcons(m_database->metadata()->customIcons(),
+                m_customIconModel->setIcons(m_database->metadata()->customIconsScaledPixmaps(),
                                             m_database->metadata()->customIconsOrder());
                 QModelIndex index = m_customIconModel->indexFromUuid(uuid);
                 m_ui->customIconsView->setCurrentIndex(index);
             }
             else {
-                // TODO: show error
+                MessageBox::critical(this, tr("Error"),
+                                     tr("Can't read icon:").append("\n").append(imageReader.errorString()));
             }
         }
     }
@@ -153,10 +159,10 @@ void EditWidgetIcons::removeCustomIcon()
             Uuid iconUuid = m_customIconModel->uuidFromIndex(index);
             int iconUsedCount = 0;
 
-            QList<Entry*> allEntries = m_database->rootGroup()->entriesRecursive(true);
+            const QList<Entry*> allEntries = m_database->rootGroup()->entriesRecursive(true);
             QList<Entry*> historyEntriesWithSameIcon;
 
-            Q_FOREACH (Entry* entry, allEntries) {
+            for (Entry* entry : allEntries) {
                 bool isHistoryEntry = !entry->group();
                 if (iconUuid == entry->iconUuid()) {
                     if (isHistoryEntry) {
@@ -168,22 +174,22 @@ void EditWidgetIcons::removeCustomIcon()
                 }
             }
 
-            QList<Group*> allGroups = m_database->rootGroup()->groupsRecursive(true);
-            Q_FOREACH (const Group* group, allGroups) {
+            const QList<Group*> allGroups = m_database->rootGroup()->groupsRecursive(true);
+            for (const Group* group : allGroups) {
                 if (iconUuid == group->iconUuid() && m_currentUuid != group->uuid()) {
                     iconUsedCount++;
                 }
             }
 
             if (iconUsedCount == 0) {
-                Q_FOREACH (Entry* entry, historyEntriesWithSameIcon) {
+                for (Entry* entry : asConst(historyEntriesWithSameIcon)) {
                     entry->setUpdateTimeinfo(false);
                     entry->setIcon(0);
                     entry->setUpdateTimeinfo(true);
                 }
 
                 m_database->metadata()->removeCustomIcon(iconUuid);
-                m_customIconModel->setIcons(m_database->metadata()->customIcons(),
+                m_customIconModel->setIcons(m_database->metadata()->customIconsScaledPixmaps(),
                                             m_database->metadata()->customIconsOrder());
                 if (m_customIconModel->rowCount() > 0) {
                     m_ui->customIconsView->setCurrentIndex(m_customIconModel->index(0, 0));

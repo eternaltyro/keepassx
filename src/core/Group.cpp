@@ -18,6 +18,7 @@
 #include "Group.h"
 
 #include "core/Config.h"
+#include "core/Global.h"
 #include "core/DatabaseIcons.h"
 #include "core/Metadata.h"
 
@@ -37,13 +38,13 @@ Group::~Group()
 {
     // Destroy entries and children manually so DeletedObjects can be added
     // to database.
-    QList<Entry*> entries = m_entries;
-    Q_FOREACH (Entry* entry, entries) {
+    const QList<Entry*> entries = m_entries;
+    for (Entry* entry : entries) {
         delete entry;
     }
 
-    QList<Group*> children = m_children;
-    Q_FOREACH (Group* group, children) {
+    const QList<Group*> children = m_children;
+    for (Group* group : children) {
         delete group;
     }
 
@@ -133,13 +134,30 @@ QPixmap Group::iconPixmap() const
     else {
         Q_ASSERT(m_db);
 
-        QPixmap pixmap;
-        if (m_db && !QPixmapCache::find(m_pixmapCacheKey, &pixmap)) {
-            pixmap = QPixmap::fromImage(m_db->metadata()->customIcon(m_data.customIcon));
-            m_pixmapCacheKey = QPixmapCache::insert(pixmap);
+        if (m_db) {
+            return m_db->metadata()->customIconPixmap(m_data.customIcon);
         }
+        else {
+            return QPixmap();
+        }
+    }
+}
 
-        return pixmap;
+QPixmap Group::iconScaledPixmap() const
+{
+    if (m_data.customIcon.isNull()) {
+        // built-in icons are 16x16 so don't need to be scaled
+        return databaseIcons()->iconPixmap(m_data.iconNumber);
+    }
+    else {
+        Q_ASSERT(m_db);
+
+        if (m_db) {
+            return m_db->metadata()->customIconScaledPixmap(m_data.customIcon);
+        }
+        else {
+            return QPixmap();
+        }
     }
 }
 
@@ -213,8 +231,6 @@ void Group::setIcon(int iconNumber)
         m_data.iconNumber = iconNumber;
         m_data.customIcon = Uuid();
 
-        m_pixmapCacheKey = QPixmapCache::Key();
-
         updateTimeinfo();
         Q_EMIT modified();
         Q_EMIT dataChanged(this);
@@ -228,8 +244,6 @@ void Group::setIcon(const Uuid& uuid)
     if (m_data.customIcon != uuid) {
         m_data.customIcon = uuid;
         m_data.iconNumber = 0;
-
-        m_pixmapCacheKey = QPixmapCache::Key();
 
         updateTimeinfo();
         Q_EMIT modified();
@@ -414,12 +428,12 @@ QList<Entry*> Group::entriesRecursive(bool includeHistoryItems) const
     entryList.append(m_entries);
 
     if (includeHistoryItems) {
-        Q_FOREACH (Entry* entry, m_entries) {
+        for (Entry* entry : m_entries) {
             entryList.append(entry->historyItems());
         }
     }
 
-    Q_FOREACH (Group* group, m_children) {
+    for (Group* group : m_children) {
         entryList.append(group->entriesRecursive(includeHistoryItems));
     }
 
@@ -433,7 +447,7 @@ QList<const Group*> Group::groupsRecursive(bool includeSelf) const
         groupList.append(this);
     }
 
-    Q_FOREACH (const Group* group, m_children) {
+    for (const Group* group : m_children) {
         groupList.append(group->groupsRecursive(true));
     }
 
@@ -447,7 +461,7 @@ QList<Group*> Group::groupsRecursive(bool includeSelf)
         groupList.append(this);
     }
 
-    Q_FOREACH (Group* group, m_children) {
+    for (Group* group : asConst(m_children)) {
         groupList.append(group->groupsRecursive(true));
     }
 
@@ -462,13 +476,14 @@ QSet<Uuid> Group::customIconsRecursive() const
         result.insert(iconUuid());
     }
 
-    Q_FOREACH (Entry* entry, entriesRecursive(true)) {
+    const QList<Entry*> entryList = entriesRecursive(true);
+    for (Entry* entry : entryList) {
         if (!entry->iconUuid().isNull()) {
             result.insert(entry->iconUuid());
         }
     }
 
-    Q_FOREACH (Group* group, m_children) {
+    for (Group* group : m_children) {
         result.unite(group->customIconsRecursive());
     }
 
@@ -484,13 +499,15 @@ Group* Group::clone(Entry::CloneFlags entryFlags) const
     clonedGroup->setUuid(Uuid::random());
     clonedGroup->m_data = m_data;
 
-    Q_FOREACH (Entry* entry, entries()) {
+    const QList<Entry*> entryList = entries();
+    for (Entry* entry : entryList) {
         Entry* clonedEntry = entry->clone(entryFlags);
         clonedEntry->setGroup(clonedGroup);
     }
 
-    Q_FOREACH (Group* groupChild, children()) {
-        Group* clonedGroupChild = groupChild->clone();
+    const QList<Group*> childrenGroups = children();
+    for (Group* groupChild : childrenGroups) {
+        Group* clonedGroupChild = groupChild->clone(entryFlags);
         clonedGroupChild->setParent(clonedGroup);
     }
 
@@ -556,7 +573,7 @@ void Group::recSetDatabase(Database* db)
         disconnect(SIGNAL(modified()), m_db);
     }
 
-    Q_FOREACH (Entry* entry, m_entries) {
+    for (Entry* entry : asConst(m_entries)) {
         if (m_db) {
             entry->disconnect(m_db);
         }
@@ -578,7 +595,7 @@ void Group::recSetDatabase(Database* db)
 
     m_db = db;
 
-    Q_FOREACH (Group* group, m_children) {
+    for (Group* group : asConst(m_children)) {
         group->recSetDatabase(db);
     }
 }
@@ -596,11 +613,11 @@ void Group::cleanupParent()
 void Group::recCreateDelObjects()
 {
     if (m_db) {
-        Q_FOREACH (Entry* entry, m_entries) {
+        for (Entry* entry : asConst(m_entries)) {
             m_db->addDeletedObject(entry->uuid());
         }
 
-        Q_FOREACH (Group* group, m_children) {
+        for (Group* group : asConst(m_children)) {
             group->recCreateDelObjects();
         }
         m_db->addDeletedObject(m_uuid);

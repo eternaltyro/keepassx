@@ -9,6 +9,14 @@
         <source>KeePassX is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
         <translation>KeePassX wordt verspreid onder de bepalingen van de GNU General Public License (GPL) versie 2 of (als u wenst) versie 3.</translation>
     </message>
+    <message>
+        <source>Revision</source>
+        <translation>Revisie</translation>
+    </message>
+    <message>
+        <source>Using:</source>
+        <translation>Maakt gebruik van:</translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -161,6 +169,43 @@
     <message>
         <source>Select key file</source>
         <translation>Kies sleutelbestand</translation>
+    </message>
+</context>
+<context>
+    <name>DatabaseRepairWidget</name>
+    <message>
+        <source>Repair database</source>
+        <translation>Database repareren</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Fout</translation>
+    </message>
+    <message>
+        <source>Can&apos;t open key file</source>
+        <translation>Niet mogelijk om het sleutelbestand te openen</translation>
+    </message>
+    <message>
+        <source>Database opened fine. Nothing to do.</source>
+        <translation>Database werd zonder problemen geopend. Niets te doen.</translation>
+    </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation>Niet mogelijk om de database te openen.</translation>
+    </message>
+    <message>
+        <source>Success</source>
+        <translation>Gelukt</translation>
+    </message>
+    <message>
+        <source>The database has been successfully repaired
+You can now save it.</source>
+        <translation>De database is met succes gerepareerd
+U kunt deze nu opslaan.</translation>
+    </message>
+    <message>
+        <source>Unable to repair the database.</source>
+        <translation>Niet mogelijk om de database te repareren.</translation>
     </message>
 </context>
 <context>
@@ -321,6 +366,12 @@ Wijzigingen ongedaan maken en doorgaan met sluiten?</translation>
     <message>
         <source>Writing the CSV file failed.</source>
         <translation>Schrijven van het CSV-bestand mislukt.</translation>
+    </message>
+    <message>
+        <source>The database you are trying to save as is locked by another instance of KeePassX.
+Do you want to save it anyway?</source>
+        <translation>De database die u op probeert te slaan is vergrendeld door een andere instantie van KeePassX.
+Wilt u toch doorgaan met opslaan?</translation>
     </message>
 </context>
 <context>
@@ -819,6 +870,16 @@ Wijzigingen ongedaan maken en doorgaan met sluiten?</translation>
         <source>Unable to calculate master key</source>
         <translation>Niet mogelijk om hoofdsleutel te berekenen</translation>
     </message>
+    <message>
+        <source>The selected file is an old KeePass 1 database (.kdb).
+
+You can import it by clicking on Database &gt; 'Import KeePass 1 database'.
+This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
+        <translation>Het gekozen bestand is een oude KeePass 1 database (.kdb).
+
+U kunt het importeren door te klikken op Database &gt; &apos;KeePass 1 database importeren&apos;.
+Deze actie is niet omkeerbaar. U kunt de geimporteerde database niet meer openen met KeePassX 0.4.</translation>
+    </message>
 </context>
 <context>
     <name>Main</name>
@@ -996,6 +1057,30 @@ Wijzigingen ongedaan maken en doorgaan met sluiten?</translation>
     <message>
         <source>Export to CSV file</source>
         <translation>Naar CSV-bestand exporteren</translation>
+    </message>
+    <message>
+        <source>Repair database</source>
+        <translation>Database repareren</translation>
+    </message>
+    <message>
+        <source>KeePass 2 Database</source>
+        <translation>KeePass 2 Database</translation>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>Alle bestanden</translation>
+    </message>
+    <message>
+        <source>Save repaired database</source>
+        <translation>Gerepareerde database opslaan</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Fout</translation>
+    </message>
+    <message>
+        <source>Writing the database failed.</source>
+        <translation>Opslaan van de database is mislukt.</translation>
     </message>
 </context>
 <context>
@@ -1187,7 +1272,7 @@ Wijzigingen ongedaan maken en doorgaan met sluiten?</translation>
     </message>
     <message>
         <source>Minimize when copying to clipboard</source>
-        <translation>Minimaliseer bij kopieeren naar klembord</translation>
+        <translation>Minimaliseer bij kopiëren naar klembord</translation>
     </message>
     <message>
         <source>Use group icon on entry creation</source>
@@ -1268,10 +1353,6 @@ Wijzigingen ongedaan maken en doorgaan met sluiten?</translation>
     <message>
         <source>path to a custom config file</source>
         <translation>pad naar een configuratiebestand</translation>
-    </message>
-    <message>
-        <source>password of the database (DANGEROUS!)</source>
-        <translation>wachtwoord van de database (GEVAARLIJK!)</translation>
     </message>
     <message>
         <source>key file of the database</source>

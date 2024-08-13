@@ -82,11 +82,12 @@ QString KeePass2XmlWriter::errorString()
 
 void KeePass2XmlWriter::generateIdMap()
 {
-    QList<Entry*> allEntries = m_db->rootGroup()->entriesRecursive(true);
+    const QList<Entry*> allEntries = m_db->rootGroup()->entriesRecursive(true);
     int nextId = 0;
 
-    Q_FOREACH (Entry* entry, allEntries) {
-        Q_FOREACH (const QString& key, entry->attachments()->keys()) {
+    for (Entry* entry : allEntries) {
+        const QList<QString> attachmentKeys = entry->attachments()->keys();
+        for (const QString& key : attachmentKeys) {
             QByteArray data = entry->attachments()->value(key);
             if (!m_idMap.contains(data)) {
                 m_idMap.insert(data, nextId++);
@@ -149,7 +150,8 @@ void KeePass2XmlWriter::writeCustomIcons()
 {
     m_xml.writeStartElement("CustomIcons");
 
-    Q_FOREACH (const Uuid& uuid, m_meta->customIconsOrder()) {
+    const QList<Uuid> customIconsOrder = m_meta->customIconsOrder();
+    for (const Uuid& uuid : customIconsOrder) {
         writeIcon(uuid, m_meta->customIcon(uuid));
     }
 
@@ -220,7 +222,8 @@ void KeePass2XmlWriter::writeCustomData()
     m_xml.writeStartElement("CustomData");
 
     QHash<QString, QString> customFields = m_meta->customFields();
-    Q_FOREACH (const QString& key, customFields.keys()) {
+    const QList<QString> keyList = customFields.keys();
+    for (const QString& key : keyList) {
         writeCustomDataItem(key, customFields.value(key));
     }
 
@@ -273,11 +276,13 @@ void KeePass2XmlWriter::writeGroup(const Group* group)
 
     writeUuid("LastTopVisibleEntry", group->lastTopVisibleEntry());
 
-    Q_FOREACH (const Entry* entry, group->entries()) {
+    const QList<Entry*> entryList = group->entries();
+    for (const Entry* entry : entryList) {
         writeEntry(entry);
     }
 
-    Q_FOREACH (const Group* child, group->children()) {
+    const QList<Group*> children = group->children();
+    for (const Group* child : children) {
         writeGroup(child);
     }
 
@@ -303,7 +308,8 @@ void KeePass2XmlWriter::writeDeletedObjects()
 {
     m_xml.writeStartElement("DeletedObjects");
 
-    Q_FOREACH (const DeletedObject& delObj, m_db->deletedObjects()) {
+    const QList<DeletedObject> delObjList = m_db->deletedObjects();
+    for (const DeletedObject& delObj : delObjList) {
         writeDeletedObject(delObj);
     }
 
@@ -337,7 +343,8 @@ void KeePass2XmlWriter::writeEntry(const Entry* entry)
     writeString("Tags", entry->tags());
     writeTimes(entry->timeInfo());
 
-    Q_FOREACH (const QString& key, entry->attributes()->keys()) {
+    const QList<QString> attributesKeyList = entry->attributes()->keys();
+    for (const QString& key : attributesKeyList) {
         m_xml.writeStartElement("String");
 
         bool protect = ( ((key == "Title") && m_meta->protectTitle()) ||
@@ -372,14 +379,15 @@ void KeePass2XmlWriter::writeEntry(const Entry* entry)
         }
 
         if (!value.isEmpty()) {
-            m_xml.writeCharacters(value);
+            m_xml.writeCharacters(stripInvalidXml10Chars(value));
         }
         m_xml.writeEndElement();
 
         m_xml.writeEndElement();
     }
 
-    Q_FOREACH (const QString& key, entry->attachments()->keys()) {
+    const QList<QString> attachmentsKeyList = entry->attachments()->keys();
+    for (const QString& key : attachmentsKeyList) {
         m_xml.writeStartElement("Binary");
 
         writeString("Key", key);
@@ -408,7 +416,8 @@ void KeePass2XmlWriter::writeAutoType(const Entry* entry)
     writeNumber("DataTransferObfuscation", entry->autoTypeObfuscation());
     writeString("DefaultSequence", entry->defaultAutoTypeSequence());
 
-    Q_FOREACH (const AutoTypeAssociations::Association& assoc, entry->autoTypeAssociations()->getAll()) {
+    const QList<AutoTypeAssociations::Association> autoTypeAssociations = entry->autoTypeAssociations()->getAll();
+    for (const AutoTypeAssociations::Association& assoc : autoTypeAssociations) {
         writeAutoTypeAssoc(assoc);
     }
 
@@ -430,7 +439,7 @@ void KeePass2XmlWriter::writeEntryHistory(const Entry* entry)
     m_xml.writeStartElement("History");
 
     const QList<Entry*>& historyItems = entry->historyItems();
-    Q_FOREACH (const Entry* item, historyItems) {
+    for (const Entry* item : historyItems) {
         writeEntry(item);
     }
 
@@ -443,7 +452,7 @@ void KeePass2XmlWriter::writeString(const QString& qualifiedName, const QString&
         m_xml.writeEmptyElement(qualifiedName);
     }
     else {
-        m_xml.writeTextElement(qualifiedName, string);
+        m_xml.writeTextElement(qualifiedName, stripInvalidXml10Chars(string));
     }
 }
 
@@ -542,6 +551,31 @@ QString KeePass2XmlWriter::colorPartToString(int value)
     QString str = QString::number(value, 16).toUpper();
     if (str.length() == 1) {
         str.prepend("0");
+    }
+
+    return str;
+}
+
+QString KeePass2XmlWriter::stripInvalidXml10Chars(QString str)
+{
+    for (int i = str.size() - 1; i >= 0; i--) {
+        const QChar ch = str.at(i);
+        const ushort uc = ch.unicode();
+
+        if (ch.isLowSurrogate() && i != 0 && str.at(i - 1).isHighSurrogate()) {
+            // keep valid surrogate pair
+            i--;
+        }
+        else if ((uc < 0x20 && uc != 0x09 && uc != 0x0A && uc != 0x0D)  // control chracters
+                 || (uc >= 0x7F && uc <= 0x84)  // control chracters, valid but discouraged by XML
+                 || (uc >= 0x86 && uc <= 0x9F)  // control chracters, valid but discouraged by XML
+                 || (uc > 0xFFFD)               // noncharacter
+                 || ch.isLowSurrogate()         // single low surrogate
+                 || ch.isHighSurrogate())       // single high surrogate
+        {
+            qWarning("Stripping invalid XML 1.0 codepoint %x", uc);
+            str.remove(i, 1);
+        }
     }
 
     return str;

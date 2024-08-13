@@ -19,7 +19,8 @@
 
 #include "core/Group.h"
 
-QList<Entry*> EntrySearcher::search(const QString &searchTerm, const Group* group, Qt::CaseSensitivity caseSensitivity)
+QList<Entry*> EntrySearcher::search(const QString& searchTerm, const Group* group,
+                                    Qt::CaseSensitivity caseSensitivity)
 {
     if (!group->resolveSearchingEnabled()) {
         return QList<Entry*>();
@@ -28,14 +29,18 @@ QList<Entry*> EntrySearcher::search(const QString &searchTerm, const Group* grou
     return searchEntries(searchTerm, group, caseSensitivity);
 }
 
-QList<Entry*> EntrySearcher::searchEntries(const QString& searchTerm, const Group* group, Qt::CaseSensitivity caseSensitivity)
+QList<Entry*> EntrySearcher::searchEntries(const QString& searchTerm, const Group* group,
+                                           Qt::CaseSensitivity caseSensitivity)
 {
     QList<Entry*> searchResult;
 
-    Q_FOREACH (Entry* entry, group->entries()) {
-        searchResult.append(matchEntry(searchTerm, entry, caseSensitivity));
+    const QList<Entry*> entryList = group->entries();
+    for (Entry* entry : entryList) {
+       searchResult.append(matchEntry(searchTerm, entry, caseSensitivity));
     }
-    Q_FOREACH (Group* childGroup, group->children()) {
+
+    const QList<Group*> children = group->children();
+    for (Group* childGroup : children) {
         if (childGroup->searchingEnabled() != Group::Disable) {
             searchResult.append(searchEntries(searchTerm, childGroup, caseSensitivity));
         }
@@ -44,10 +49,11 @@ QList<Entry*> EntrySearcher::searchEntries(const QString& searchTerm, const Grou
     return searchResult;
 }
 
-QList<Entry*> EntrySearcher::matchEntry(const QString& searchTerm, Entry* entry, Qt::CaseSensitivity caseSensitivity)
+QList<Entry*> EntrySearcher::matchEntry(const QString& searchTerm, Entry* entry,
+                                        Qt::CaseSensitivity caseSensitivity)
 {
-    QStringList wordList = searchTerm.split(QRegExp("\\s"), QString::SkipEmptyParts);
-    Q_FOREACH (const QString& word, wordList) {
+    const QStringList wordList = searchTerm.split(QRegExp("\\s"), QString::SkipEmptyParts);
+    for (const QString& word : wordList) {
         if (!wordMatch(word, entry, caseSensitivity)) {
             return QList<Entry*>();
         }

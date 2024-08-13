@@ -74,6 +74,7 @@ public:
     QStringList customEntryAttributes() const;
     bool isGroupSelected() const;
     bool isInEditMode() const;
+    bool isEditWidgetModified() const;
     QList<int> splitterSizes() const;
     void setSplitterSizes(const QList<int>& sizes);
     QList<int> entryHeaderViewSizes() const;
@@ -100,6 +101,9 @@ Q_SIGNALS:
     void searchModeActivated();
     void splitterSizesChanged();
     void entryColumnSizesChanged();
+
+protected:
+    bool eventFilter(QObject* object, QEvent* event) override;
 
 public Q_SLOTS:
     void createEntry();

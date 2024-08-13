@@ -9,6 +9,14 @@
         <source>KeePassX is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
         <translation>KeePassX est distribué selon les conditions de la GNU General Public License (GPL) version 2 ou (à votre choix) version 3.</translation>
     </message>
+    <message>
+        <source>Revision</source>
+        <translation>Version</translation>
+    </message>
+    <message>
+        <source>Using:</source>
+        <translation>Utilise :</translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -25,7 +33,7 @@
     <name>AutoTypeAssociationsModel</name>
     <message>
         <source>Window</source>
-        <translation>Fenêtre </translation>
+        <translation>Fenêtre</translation>
     </message>
     <message>
         <source>Sequence</source>
@@ -75,7 +83,7 @@
     </message>
     <message>
         <source>Key files</source>
-        <translation>Fichiers de clé</translation>
+        <translation>Fichiers-clés</translation>
     </message>
     <message>
         <source>All files</source>
@@ -116,7 +124,7 @@
     <message>
         <source>Failed to set %1 as the Key file:
 %2</source>
-        <translation>Impossible de définir %1 comme fichier-clé:
+        <translation>Impossible de définir %1 comme fichier-clé :
 %2</translation>
     </message>
 </context>
@@ -164,6 +172,43 @@
     </message>
 </context>
 <context>
+    <name>DatabaseRepairWidget</name>
+    <message>
+        <source>Repair database</source>
+        <translation>Réparer la base de données</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Erreur</translation>
+    </message>
+    <message>
+        <source>Can&apos;t open key file</source>
+        <translation>Impossible d&apos;ouvrir le fichier-clé</translation>
+    </message>
+    <message>
+        <source>Database opened fine. Nothing to do.</source>
+        <translation>La base de données s&apos;est bien ouverte. Aucune action à effectuer.</translation>
+    </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation>Impossible d&apos;ouvrir la base de données.</translation>
+    </message>
+    <message>
+        <source>Success</source>
+        <translation>Succès</translation>
+    </message>
+    <message>
+        <source>The database has been successfully repaired
+You can now save it.</source>
+        <translation>La base de données a correctement été réparée.
+Vous pouvez maintenant la sauvegarder.</translation>
+    </message>
+    <message>
+        <source>Unable to repair the database.</source>
+        <translation>Impossible de réparer la base de données.</translation>
+    </message>
+</context>
+<context>
     <name>DatabaseSettingsWidget</name>
     <message>
         <source>Database name:</source>
@@ -187,7 +232,7 @@
     </message>
     <message>
         <source> MiB</source>
-        <translation>MiB</translation>
+        <translation> MiB</translation>
     </message>
     <message>
         <source>Benchmark</source>
@@ -226,7 +271,7 @@
     </message>
     <message>
         <source>File not found!</source>
-        <translation>Fichier introuvable!</translation>
+        <translation>Fichier introuvable !</translation>
     </message>
     <message>
         <source>Open KeePass 1 database</source>
@@ -260,7 +305,7 @@ Enregistrer les modifications ?</translation>
     </message>
     <message>
         <source>Writing the database failed.</source>
-        <translation>Une erreur s&apos;est produite lors de l&apos;écriture de la base de données. </translation>
+        <translation>Une erreur s&apos;est produite lors de l&apos;écriture de la base de données.</translation>
     </message>
     <message>
         <source>Save database as</source>
@@ -282,7 +327,7 @@ Voulez-vous quand même l&apos;ouvrir ? Dans ce cas, elle sera ouverte en lectur
     </message>
     <message>
         <source>Lock database</source>
-        <translation>Verrouiiler la base de données</translation>
+        <translation>Verrouiller la base de données</translation>
     </message>
     <message>
         <source>Can't lock the database as you are currently editing it.
@@ -321,6 +366,12 @@ Ignorer les changements et fermer ?</translation>
     <message>
         <source>Writing the CSV file failed.</source>
         <translation>Échec de l&apos;écriture du fichier CSV.</translation>
+    </message>
+    <message>
+        <source>The database you are trying to save as is locked by another instance of KeePassX.
+Do you want to save it anyway?</source>
+        <translation>La base de données que vous essayez de sauvegarder a été verrouillée par une autre instance de KeePassX.
+Voulez-vous quand même la sauvegarder ?</translation>
     </message>
 </context>
 <context>
@@ -394,7 +445,7 @@ Ignorer les changements et fermer ?</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Propriétés </translation>
+        <translation>Propriétés</translation>
     </message>
     <message>
         <source>History</source>
@@ -439,7 +490,7 @@ Ignorer les changements et fermer ?</translation>
     <message>
         <source>Unable to save the attachment:
 </source>
-        <translation>Impossible d&apos;enregistrer le fichier attaché:
+        <translation>Impossible d&apos;enregistrer le fichier attaché :
 </translation>
     </message>
     <message>
@@ -463,7 +514,7 @@ Ignorer les changements et fermer ?</translation>
     <name>EditEntryWidgetAdvanced</name>
     <message>
         <source>Additional attributes</source>
-        <translation>Attributs supplémentaires </translation>
+        <translation>Attributs supplémentaires</translation>
     </message>
     <message>
         <source>Add</source>
@@ -483,7 +534,7 @@ Ignorer les changements et fermer ?</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Enregistrer le fichier </translation>
+        <translation>Enregistrer le fichier</translation>
     </message>
     <message>
         <source>Open</source>
@@ -522,7 +573,7 @@ Ignorer les changements et fermer ?</translation>
     </message>
     <message>
         <source>Set custom sequence:</source>
-        <translation>Définir une séquence personnalisé :</translation>
+        <translation>Définir une séquence personnalisée :</translation>
     </message>
 </context>
 <context>
@@ -552,7 +603,7 @@ Ignorer les changements et fermer ?</translation>
     </message>
     <message>
         <source>Username:</source>
-        <translation>Non d&apos;utilisateur :</translation>
+        <translation>Nom d&apos;utilisateur :</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -595,11 +646,11 @@ Ignorer les changements et fermer ?</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Propriétés </translation>
+        <translation>Propriétés</translation>
     </message>
     <message>
         <source>Add group</source>
-        <translation>Ajouter un groupe. </translation>
+        <translation>Ajouter un groupe</translation>
     </message>
     <message>
         <source>Edit group</source>
@@ -745,7 +796,7 @@ Ignorer les changements et fermer ?</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Non d&apos;utilisateur</translation>
+        <translation>Nom d&apos;utilisateur</translation>
     </message>
     <message>
         <source>URL</source>
@@ -782,7 +833,7 @@ Ignorer les changements et fermer ?</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Ce n&apos;est pas une base de donnée KeePass.</translation>
+        <translation>Ce n&apos;est pas une base de données KeePass.</translation>
     </message>
     <message>
         <source>Unsupported encryption algorithm.</source>
@@ -790,7 +841,7 @@ Ignorer les changements et fermer ?</translation>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation>Version de base de donnée KeePass non supportée.</translation>
+        <translation>Version de base de données KeePass non supportée.</translation>
     </message>
     <message>
         <source>Root</source>
@@ -805,19 +856,29 @@ Ignorer les changements et fermer ?</translation>
     <name>KeePass2Reader</name>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Ce n&apos;est pas une base de donnée KeePass.</translation>
+        <translation>Ce n&apos;est pas une base de données KeePass.</translation>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation>Version de base de donnée KeePass non supportée.</translation>
+        <translation>Version de base de données KeePass non supportée.</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
-        <translation>Mauvaise clé ou fichier de base de donnée corrompu.</translation>
+        <translation>Mauvaise clé ou fichier de base de données corrompu.</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
         <translation>Impossible de calculer la clé maître</translation>
+    </message>
+    <message>
+        <source>The selected file is an old KeePass 1 database (.kdb).
+
+You can import it by clicking on Database &gt; 'Import KeePass 1 database'.
+This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
+        <translation>Le fichier sélectionné est une ancienne base de données pour KeePass 1 (.kdb).
+
+Vous pouvez l&apos;importer en cliquant sur &quot;Base de données&quot; &gt; &quot;Importer une base de données KeePass 1&quot;.
+Ceci est une migration à sens unique. Vous ne serez plus en mesure d&apos;ouvrir la base de données importée avec l&apos;ancienne version KeePassX version 0.4.</translation>
     </message>
 </context>
 <context>
@@ -851,7 +912,7 @@ Ignorer les changements et fermer ?</translation>
     </message>
     <message>
         <source>Copy attribute to clipboard</source>
-        <translation>Copier l&apos;attribut dans le presse-papiers</translation>
+        <translation>Copier l&apos;attribut dans le presse-papier</translation>
     </message>
     <message>
         <source>Groups</source>
@@ -871,19 +932,19 @@ Ignorer les changements et fermer ?</translation>
     </message>
     <message>
         <source>Open database</source>
-        <translation>Ouvrir une base de donnée</translation>
+        <translation>Ouvrir une base de données</translation>
     </message>
     <message>
         <source>Save database</source>
-        <translation>Enregistrer la base de donnée</translation>
+        <translation>Enregistrer la base de données</translation>
     </message>
     <message>
         <source>Close database</source>
-        <translation>Fermer la base de donnée</translation>
+        <translation>Fermer la base de données</translation>
     </message>
     <message>
         <source>New database</source>
-        <translation>Nouvelle base de donnée</translation>
+        <translation>Nouvelle base de données</translation>
     </message>
     <message>
         <source>Add new entry</source>
@@ -911,7 +972,7 @@ Ignorer les changements et fermer ?</translation>
     </message>
     <message>
         <source>Save database as</source>
-        <translation>Enregistrer la base de donnée sous</translation>
+        <translation>Enregistrer la base de données sous</translation>
     </message>
     <message>
         <source>Change master key</source>
@@ -919,11 +980,11 @@ Ignorer les changements et fermer ?</translation>
     </message>
     <message>
         <source>Database settings</source>
-        <translation>Paramètre de la base de donnée</translation>
+        <translation>Paramètres de la base de données</translation>
     </message>
     <message>
         <source>Import KeePass 1 database</source>
-        <translation>Importer une base de donnée KeePass 1</translation>
+        <translation>Importer une base de données KeePass 1</translation>
     </message>
     <message>
         <source>Clone entry</source>
@@ -935,11 +996,11 @@ Ignorer les changements et fermer ?</translation>
     </message>
     <message>
         <source>Copy username to clipboard</source>
-        <translation>Copier le nom d&apos;utilisateur dans le presse-papiers</translation>
+        <translation>Copier le nom d&apos;utilisateur dans le presse-papier</translation>
     </message>
     <message>
         <source>Copy password to clipboard</source>
-        <translation>Copier le mot de passe dans le presse-papiers</translation>
+        <translation>Copier le mot de passe dans le presse-papier</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -997,6 +1058,30 @@ Ignorer les changements et fermer ?</translation>
         <source>Export to CSV file</source>
         <translation>Exporter au format CSV</translation>
     </message>
+    <message>
+        <source>Repair database</source>
+        <translation>Réparer la base de données</translation>
+    </message>
+    <message>
+        <source>KeePass 2 Database</source>
+        <translation>Base de données KeePass 2</translation>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>Tous les fichiers</translation>
+    </message>
+    <message>
+        <source>Save repaired database</source>
+        <translation>Sauvegarder la base de données réparée</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Erreur</translation>
+    </message>
+    <message>
+        <source>Writing the database failed.</source>
+        <translation>Une erreur s&apos;est produite lors de l&apos;écriture de la base de données.</translation>
+    </message>
 </context>
 <context>
     <name>PasswordGeneratorWidget</name>
@@ -1010,7 +1095,7 @@ Ignorer les changements et fermer ?</translation>
     </message>
     <message>
         <source>Character Types</source>
-        <translation>Types de caractère</translation>
+        <translation>Types de caractères</translation>
     </message>
     <message>
         <source>Upper Case Letters</source>
@@ -1045,7 +1130,7 @@ Ignorer les changements et fermer ?</translation>
     <name>QCommandLineParser</name>
     <message>
         <source>Displays version information.</source>
-        <translation>Afficher les informations de version</translation>
+        <translation>Afficher les informations de version.</translation>
     </message>
     <message>
         <source>Displays this help.</source>
@@ -1156,7 +1241,7 @@ Ignorer les changements et fermer ?</translation>
     <name>SettingsWidget</name>
     <message>
         <source>Application Settings</source>
-        <translation>Paramètre de l&apos;application</translation>
+        <translation>Paramètres de l&apos;application</translation>
     </message>
     <message>
         <source>General</source>
@@ -1175,19 +1260,19 @@ Ignorer les changements et fermer ?</translation>
     </message>
     <message>
         <source>Open previous databases on startup</source>
-        <translation>Ouvrir les base de données précédentes au démarrage</translation>
+        <translation>Ouvrir les bases de données précédentes au démarrage</translation>
     </message>
     <message>
         <source>Automatically save on exit</source>
-        <translation>Sauvegarde automatiquement à la sortie</translation>
+        <translation>Sauvegarder automatiquement à la sortie</translation>
     </message>
     <message>
         <source>Automatically save after every change</source>
-        <translation>Sauvegarde automatiquement après chaque modification</translation>
+        <translation>Sauvegarder automatiquement après chaque modification</translation>
     </message>
     <message>
         <source>Minimize when copying to clipboard</source>
-        <translation>Réduire lors de la copie dans le presse-papiers</translation>
+        <translation>Réduire lors de la copie dans le presse-papier</translation>
     </message>
     <message>
         <source>Use group icon on entry creation</source>
@@ -1199,7 +1284,7 @@ Ignorer les changements et fermer ?</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global auto-type</source>
-        <translation>Utiliser la correspondance entre le titre de l&apos;entrée et de la fenêtre pour le remplissage  automatique global</translation>
+        <translation>Utiliser la correspondance entre le titre de l&apos;entrée et de la fenêtre pour le remplissage automatique global</translation>
     </message>
     <message>
         <source>Language</source>
@@ -1222,15 +1307,15 @@ Ignorer les changements et fermer ?</translation>
     <name>SettingsWidgetSecurity</name>
     <message>
         <source>Clear clipboard after</source>
-        <translation>Vider le presse-papiers après</translation>
+        <translation>Vider le presse-papier après</translation>
     </message>
     <message>
         <source> sec</source>
-        <translation>s</translation>
+        <translation> s</translation>
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
-        <translation>Verrouiller les bases de donnée après une inactivité de</translation>
+        <translation>Verrouiller les bases de données après une inactivité de</translation>
     </message>
     <message>
         <source>Show passwords in cleartext by default</source>
@@ -1245,7 +1330,7 @@ Ignorer les changements et fermer ?</translation>
     <name>UnlockDatabaseWidget</name>
     <message>
         <source>Unlock database</source>
-        <translation>Déverrouiller la base de donnée</translation>
+        <translation>Déverrouiller la base de données</translation>
     </message>
 </context>
 <context>
@@ -1263,15 +1348,11 @@ Ignorer les changements et fermer ?</translation>
     </message>
     <message>
         <source>filename of the password database to open (*.kdbx)</source>
-        <translation>Nom de fichier de la base de donnée de mot de pass à ouvrir (*.kdbx)</translation>
+        <translation>Nom de fichier de la base de données de mot de passe à ouvrir (*.kdbx)</translation>
     </message>
     <message>
         <source>path to a custom config file</source>
         <translation>Chemin vers un fichier de configuration personnalisé</translation>
-    </message>
-    <message>
-        <source>password of the database (DANGEROUS!)</source>
-        <translation>Mot de passe de la base de donnée (DANGEREUX !)</translation>
     </message>
     <message>
         <source>key file of the database</source>

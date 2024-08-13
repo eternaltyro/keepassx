@@ -113,13 +113,25 @@ QPixmap Entry::iconPixmap() const
     else {
         Q_ASSERT(database());
 
-        QPixmap pixmap;
-        if (database() && !QPixmapCache::find(m_pixmapCacheKey, &pixmap)) {
-            pixmap = QPixmap::fromImage(database()->metadata()->customIcon(m_data.customIcon));
-            m_pixmapCacheKey = QPixmapCache::insert(pixmap);
+        if (database()) {
+            return database()->metadata()->customIconPixmap(m_data.customIcon);
         }
+        else {
+            return QPixmap();
+        }
+    }
+}
 
-        return pixmap;
+QPixmap Entry::iconScaledPixmap() const
+{
+    if (m_data.customIcon.isNull()) {
+        // built-in icons are 16x16 so don't need to be scaled
+        return databaseIcons()->iconPixmap(m_data.iconNumber);
+    }
+    else {
+        Q_ASSERT(database());
+
+        return database()->metadata()->customIconScaledPixmap(m_data.customIcon);
     }
 }
 
@@ -247,8 +259,6 @@ void Entry::setIcon(int iconNumber)
         m_data.iconNumber = iconNumber;
         m_data.customIcon = Uuid();
 
-        m_pixmapCacheKey = QPixmapCache::Key();
-
         Q_EMIT modified();
         emitDataChanged();
     }
@@ -261,8 +271,6 @@ void Entry::setIcon(const Uuid& uuid)
     if (m_data.customIcon != uuid) {
         m_data.customIcon = uuid;
         m_data.iconNumber = 0;
-
-        m_pixmapCacheKey = QPixmapCache::Key();
 
         Q_EMIT modified();
         emitDataChanged();
@@ -363,7 +371,6 @@ const QList<Entry*>& Entry::historyItems() const
 void Entry::addHistoryItem(Entry* entry)
 {
     Q_ASSERT(!entry->parent());
-    Q_ASSERT(entry->uuid() == uuid());
 
     m_history.append(entry);
     Q_EMIT modified();
@@ -375,7 +382,7 @@ void Entry::removeHistoryItems(const QList<Entry*>& historyEntries)
         return;
     }
 
-    Q_FOREACH (Entry* entry, historyEntries) {
+    for (Entry* entry : historyEntries) {
         Q_ASSERT(!entry->parent());
         Q_ASSERT(entry->uuid() == uuid());
         Q_ASSERT(m_history.contains(entry));
@@ -424,8 +431,8 @@ void Entry::truncateHistory()
             if (size <= histMaxSize) {
                 size += historyItem->attributes()->attributesSize();
 
-                QSet<QByteArray> newAttachments = historyItem->attachments()->values().toSet() - foundAttachements;
-                Q_FOREACH (const QByteArray& attachment, newAttachments) {
+                const QSet<QByteArray> newAttachments = historyItem->attachments()->values().toSet() - foundAttachements;
+                for (const QByteArray& attachment : newAttachments) {
                     size += attachment.size();
                 }
                 foundAttachements += newAttachments;
@@ -454,7 +461,7 @@ Entry* Entry::clone(CloneFlags flags) const
     entry->m_attachments->copyDataFrom(m_attachments);
     entry->m_autoTypeAssociations->copyDataFrom(this->m_autoTypeAssociations);
     if (flags & CloneIncludeHistory) {
-        Q_FOREACH (Entry* historyItem, m_history) {
+        for (Entry* historyItem : m_history) {
             Entry* historyItemClone = historyItem->clone(flags & ~CloneIncludeHistory & ~CloneNewUuid);
             historyItemClone->setUpdateTimeinfo(false);
             historyItemClone->setUuid(entry->uuid());
@@ -501,7 +508,7 @@ void Entry::beginUpdate()
     m_modifiedSinceBegin = false;
 }
 
-void Entry::endUpdate()
+bool Entry::endUpdate()
 {
     Q_ASSERT(m_tmpHistoryItem);
     if (m_modifiedSinceBegin) {
@@ -514,6 +521,8 @@ void Entry::endUpdate()
     }
 
     m_tmpHistoryItem = nullptr;
+
+    return m_modifiedSinceBegin;
 }
 
 void Entry::updateModifiedSinceBegin()
